@@ -1,2 +1,3 @@
 <?php
-echo "Welcome to test page";
+include_once "db.php";
+$db = new Database();
