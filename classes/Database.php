@@ -11,6 +11,9 @@ class Database
 
     protected $handler;
 
+    /**
+     * Database constructor.
+     */
     public function __construct()
     {
 
@@ -26,7 +29,11 @@ class Database
 
     }
 
-    public function executeNoParams($sql)
+    /**
+     * @param $sql
+     * @return bool
+     */
+    public function queryNoParams($sql)
     {
 
         try {
