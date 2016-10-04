@@ -5,7 +5,7 @@
  * Date: 10/4/16
  * Time: 3:55 PM
  */
-
+ini_set('display_errors', 1);
 require "../classes/Database.php";
 
 function create()
@@ -30,7 +30,7 @@ function create()
       `email` VARCHAR (255) NOT NULL,
       PRIMARY KEY (`id`),
       INDEX `username` (`username` ASC),
-      INDEX `email` (`email` ASC),
+      INDEX `email` (`email` ASC)
     )";
     $db->executeNoParams($sql);
 
