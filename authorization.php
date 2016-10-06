@@ -7,7 +7,6 @@
  */
 include_once "templates/header.php";
 ?>
-    <?php render_link("index"); ?>
     <form class="form-signin">
         <legend><?php render_title(); ?></legend>
         <label for="inputEmail" class="sr-only"><?= $TITLES["email"] ?></label>
