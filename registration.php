@@ -7,8 +7,6 @@
  */
 require_once "templates/header.php";
 ?>
-
-    <?php render_link("index"); ?>
     <form class="form-horizontal form-registration">
         <fieldset>
             <legend><?php render_title(); ?></legend>
