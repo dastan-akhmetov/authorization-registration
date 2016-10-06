@@ -1,0 +1,20 @@
+RewriteEngine On
+RewriteBase /
+
+# Do not rewrite existing files and folders
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+
+
+# Rewrite for human-friendly URLs
+#RewriteRule ^main/?$ index.php
+#RewriteRule ^authorization/?$ authorization.php
+#RewriteRule ^registration/?$ registration.php
+#RewriteRule ^logout/?$ logout.php
+
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Rewrite for language settings
+RewriteRule ^(ru|en)/(.*)$ $2/?lang=$1 [L]
