@@ -8,7 +8,7 @@
 require_once "templates/header.php";
 ?>
 
-<a href="index.php">Index</a>
+<?php render_link("index"); ?>
 
 <?php
 require_once "templates/footer.php";
