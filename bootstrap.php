@@ -16,6 +16,8 @@ $_SESSION["lang"] = $_GET["lang"] ?? "en";
 
 $BASE_URL = "http://".$_SERVER["SERVER_NAME"]."/";
 
+$SITE_TITLE = "ABC Company";
+
 /*
  * Russian
  */
@@ -62,7 +64,7 @@ $LANGUAGE_SET["ru"]["titles"]["sign_in"]        = "Войти";
  */
 
 // Links
-$LANGUAGE_SET["en"]["links"]["Main"]            = "index";
+$LANGUAGE_SET["en"]["links"]["Home"]            = "index";
 $LANGUAGE_SET["en"]["links"]["Authorization"]   = "authorization";
 $LANGUAGE_SET["en"]["links"]["Registration"]    = "registration";
 $LANGUAGE_SET["en"]["links"]["Logout"]          = "logout";
@@ -101,9 +103,62 @@ $LANGUAGE_SET["en"]["titles"]["sign_in"]        = "Sign In";
 // Chosen language pack
 $LANGUAGE = $LANGUAGE_SET[$CURRENT_LANGUAGE];
 
-$LANGUAGE_PAIRS = []; // declare language pairs array
-
 $TITLES = $LANGUAGE["titles"];
+
+$LINKS = $LANGUAGE["links"];
+
+$LINK_TITLES = [];
+
+$CURRENT_PAGE = get_current_page();
+
+/**
+ * @param $links
+ */
+function make_link_titles($links)
+{
+    global $LINK_TITLES;
+
+    $LINK_TITLES = array_flip($links);
+}
+
+make_link_titles($LANGUAGE["links"]);
+
+/**
+ *
+ */
+function render_breadcrumbs()
+{
+    global $BASE_URL;
+    global $CURRENT_LANGUAGE;
+    global $LINK_TITLES;
+    global $CURRENT_PAGE;
+
+    $root = "/";
+    $breadcrumbs = [];
+
+    if ($CURRENT_PAGE == $root || $CURRENT_PAGE == "index")
+    {
+        $breadcrumbs[] = "index";
+    }
+    else {
+        $breadcrumbs[] = "index";
+        $breadcrumbs[] = $CURRENT_PAGE;
+    }
+
+    echo "<ul class=\"breadcrumb\">";
+
+    for ($i = 0; $i < count($breadcrumbs); $i++) {
+
+            echo "<li><a href=\"" . $BASE_URL . $CURRENT_LANGUAGE . "/" . $breadcrumbs[$i] . "\">" . $LINK_TITLES[$breadcrumbs[$i]] . "</a></li>";
+
+    }
+
+    echo "</ul>";
+
+}
+
+
+$LANGUAGE_PAIRS = []; // declare language pairs array
 
 /**
  * Extracts available languages from language set
@@ -154,9 +209,9 @@ function render_language_links()
     $page = get_current_page();
 
     foreach ($LANGUAGE_PAIRS as $lang) {
-
-        render_link($page, $lang);
-        echo "&nbsp;";
+        echo "<li>";
+            render_link($page, $lang);
+        echo "</li>";
 
     }
 
@@ -170,14 +225,14 @@ function render_language_links()
 function render_link($page, $link = "page")
 {
     global $BASE_URL;
-    global $LANGUAGE;
+    global $LINKS;
     global $CURRENT_LANGUAGE;
 
     // currently used language
     $lang = $CURRENT_LANGUAGE;
 
     // hyperlinks in current language set
-    $links = $LANGUAGE["links"];
+    $links = $LINKS;
 
     // specify page explicitly
     if ($page == "/")
