@@ -1,6 +1,7 @@
+html,
 body {
-    padding-top: 40px;
-    padding-bottom: 40px;
+    margin: 0;
+    padding: 0;
     background-color: #eee;
 }
 
@@ -10,20 +11,16 @@ body {
  *
  */
 
-.form-signin,
-.form-register {
+.form-signin {
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
 }
-
 .form-signin,
 .form-signin-heading,
-.form-register-heading,
 .form-signin .checkbox {
     margin-bottom: 10px;
 }
-
 .form-signin .checkbox {
     font-weight: normal;
 }
@@ -47,4 +44,21 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+/**
+ * Form Registration
+ *
+ */
+
+.form-registration {
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.form-dob {
+
+}
+.select-dob {
+    max-width: 120px;
 }
