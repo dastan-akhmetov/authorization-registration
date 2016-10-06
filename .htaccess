@@ -9,7 +9,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 
 # Rewrite for human-friendly URLs
-#RewriteRule ^main/?$ index.php
+#RewriteRule ^home/?$ index.php
 #RewriteRule ^authorization/?$ authorization.php
 #RewriteRule ^registration/?$ registration.php
 #RewriteRule ^logout/?$ logout.php
