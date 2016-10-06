@@ -5,10 +5,16 @@ require_once "templates/header.php";
 <ul>
     <?php
         if (isset($_SESSION["logged_in"]))
-            echo "<li><a href=\"logout.php\">Logout</a></li>";
+            render_link("logout");
         else {
-            echo "<li><a href=\"login.php\">Login</a></li>";
-            echo "<li><a href=\"register.php\">Register</a></li>";
+            echo "<ul>";
+                echo "<li>";
+                    render_link("authorization");
+                echo "</li>";
+                echo "<li>";
+                    render_link("registration");
+                echo "</li>";
+            echo "</ul>";
         }
     ?>
 </ul>
@@ -18,5 +24,5 @@ require_once "templates/header.php";
 
 
 <?php
-require_once "templates/footer.php.php";
+require_once "templates/footer.php";
 ?>
