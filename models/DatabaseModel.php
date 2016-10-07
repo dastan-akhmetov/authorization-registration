@@ -1,14 +1,12 @@
 <?php
 
-namespace Models\Database;
-
 // Database connection configurations
 define ("DSN", "mysql:dbname=authorization;host=localhost");
 define ("USER", "authorization");
 define ("PASS", "authorization");
 
 
-class Database
+class DatabaseModel
 {
 
     protected $handler;
