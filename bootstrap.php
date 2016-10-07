@@ -76,6 +76,10 @@ $LANGUAGE_SET["ru"]["validation"]["firstname_is_not_string"]    = "Имя дол
 $LANGUAGE_SET["ru"]["validation"]["lastname_is_short"]          = "Фамилия слишком короткая";
 $LANGUAGE_SET["ru"]["validation"]["lastname_is_not_string"]     = "Фамилия должна состоять только из букв";
 
+// Registration titles
+$LANGUAGE_SET["ru"]["registration"]["successful_registration"]  = "Вы успешно прошли регистрацию";
+$LANGUAGE_SET["ru"]["registration"]["failed_registration"]      = "Произошла ошибка во время регистрации. Попробуйте заново.";
+
 /*
  * English
  */
@@ -132,6 +136,10 @@ $LANGUAGE_SET["en"]["validation"]["firstname_is_not_string"]    = "Firstname mus
 $LANGUAGE_SET["en"]["validation"]["lastname_is_short"]          = "Lastname is too short";
 $LANGUAGE_SET["en"]["validation"]["lastname_is_not_string"]     = "Lastname must contain only alphabetic letters";
 
+// Registration titles
+$LANGUAGE_SET["en"]["registration"]["successful_registration"]  = "You are successfully registered";
+$LANGUAGE_SET["en"]["registration"]["failed_registration"]      = "Something went wrong on the registration process. Try again.";
+
 // Chosen language pack
 $LANGUAGE = $LANGUAGE_SET[$CURRENT_LANGUAGE];
 
@@ -144,6 +152,8 @@ $LINK_TITLES = [];
 $CURRENT_PAGE = get_current_page();
 
 $VALIDATION = $LANGUAGE["validation"];
+
+$REGISTRATION = $LANGUAGE["registration"];
 
 /**
  * @param $links
@@ -294,9 +304,12 @@ function render_title()
     echo array_search(get_current_page(), $links);
 }
 
-function render_input_value($fieldName)
+function render_input_value($fieldName, $registered)
 {
-    echo $_POST[$fieldName] ?? NULL;
+    if ($registered)
+        echo NULL;
+    else
+        echo $_POST[$fieldName] ?? NULL;
 }
 
 function get_input_value($fieldName)
@@ -304,16 +317,21 @@ function get_input_value($fieldName)
     return $_POST[$fieldName] ?? NULL;
 }
 
-function render_radio_checked($fieldName, $value)
+function render_radio_checked($fieldName, $value, $registered)
 {
-    if (isset($_POST[$fieldName])) {
+
+    if (!$registered && isset($_POST[$fieldName])) {
         if ($_POST[$fieldName] == $value)
             echo " checked=\"\" ";
     }
+
 }
 
-function render_days_of_month($selected)
+function render_days_of_month($selected, $registered)
 {
+    if ($registered)
+        $selected = "-";
+
     echo "<option value=\"-\"> - </option>";
     echo "\n\t\t\t\t\t\t\t\t";
 
@@ -332,9 +350,12 @@ function render_days_of_month($selected)
     }
 }
 
-function render_months($selected)
+function render_months($selected, $registered)
 {
     global $LANGUAGE;
+
+    if ($registered)
+        $selected = "-";
 
     $months = $LANGUAGE["months"];
     $i = 1;
@@ -359,8 +380,11 @@ function render_months($selected)
     }
 }
 
-function render_years($selected)
+function render_years($selected, $registered)
 {
+
+    if ($registered)
+        $selected = "-";
 
     echo "<option value=\"-\"> - </option>";
     echo "\n\t\t\t\t\t\t\t\t";
