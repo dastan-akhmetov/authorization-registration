@@ -10,6 +10,8 @@ class DatabaseModel
 {
 
     protected $handler;
+    protected $params;
+    protected $sql;
 
     /**
      * Database constructor.
@@ -26,6 +28,26 @@ class DatabaseModel
             echo "Bad connection.";
 
         }
+
+    }
+
+    public function __get($property)
+    {
+
+        if (property_exists($this, $property))
+
+            return $this->$property;
+
+    }
+
+    public function __set($property, $value)
+    {
+
+        if (property_exists($this, $property))
+
+            $this->$property = $value;
+
+        return $this;
 
     }
 
@@ -51,5 +73,40 @@ class DatabaseModel
         return TRUE;
 
     }
+
+    public function select()
+    {
+        try {
+
+            $query = $this->handler->prepare($this->sql);
+            $query->execute($this->params);
+
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (Throwable $t) {
+
+            echo "Bad select.";
+
+        }
+
+        return $result;
+    }
+
+    public function insert()
+    {
+        try {
+
+            $query = $this->handler->prepare($this->sql);
+            $query->execute($this->params);
+
+        } catch (Throwable $t) {
+
+            echo "Bad insert.";
+
+        }
+
+        return TRUE;
+    }
+
 
 }
