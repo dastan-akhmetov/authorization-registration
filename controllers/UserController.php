@@ -11,6 +11,7 @@ class UserController
 
     private $model;
     private $TITLES;
+    private $REGISTRATION_TITLES;
     private $email;
     private $password;
     private $password_repeat;
@@ -21,6 +22,9 @@ class UserController
     private $year_of_birth;
     private $gender;
     private $isRegistering;
+
+    private $message;
+    private $message_type;
 
 
     public function __construct()
@@ -51,6 +55,63 @@ class UserController
 
     }
 
+    public function register()
+    {
+
+        $validations_ok = $this->validate_fields();
+
+        if ($validations_ok) {
+
+            $hash_password = sha1($this->password);
+
+            $this->model->email = $this->email;
+            $this->model->password = $hash_password;
+            $this->model->firstname = $this->firstname;
+            $this->model->lastname = $this->lastname;
+            $this->model->gender = $this->gender;
+            $this->model->date_of_birth = $this->year_of_birth . '-' . $this->month_of_birth . '-' . $this->day_of_birth;
+
+            $register = $this->model->register();
+
+            if ($register) {
+
+                $this->message_type = "success";
+                $this->message = $this->REGISTRATION_TITLES["successful_registration"];
+
+                $this->print_message();
+
+                return TRUE;
+
+            }
+            else {
+
+                $this->message_type = "danger";
+                $this->message = $this->REGISTRATION_TITLES["failed_registration"];
+
+                $this->print_message();
+
+                return FALSE;
+
+            }
+
+        }
+
+    }
+
+    public function print_message()
+    {
+
+        echo "<div class=\"alert alert-dismissible alert-" . $this->message_type . "\">";
+            echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
+            echo $this->message;
+        echo "</div>";
+
+    }
+
+
+    /*
+     * * * * * * * * * * * *   VALIDATIONS BEGIN  * * * * * * * * * * * *
+     */
 
     public function validate_fields()
     {
@@ -111,8 +172,31 @@ class UserController
 
         }
 
-        // Print out the errors
-        $this->render_validation_errors($messages);
+        $returnFalse = 0;
+        $returnTotal = count($messages);
+
+        foreach ($messages as $message) {
+
+            if ($message === FALSE)
+
+                $returnFalse++;
+        }
+
+        if ($returnFalse == $returnTotal) {
+
+            return TRUE;
+
+        }
+        else {
+
+            // Print out the errors
+            $this->render_validation_errors($messages);
+
+            return FALSE;
+
+        }
+
+
 
     }
 
@@ -286,4 +370,8 @@ class UserController
         return $message;
 
     }
+
+    /*
+     * * * * * * * * * * * *   VALIDATIONS END  * * * * * * * * * * * *
+     */
 }
