@@ -6,7 +6,7 @@
  * Time: 3:55 PM
  */
 
-require "../classes/Database.php";
+require "../models/DatabaseModel.php";
 
 /**
  * The function creates a table `User`
