@@ -9,12 +9,16 @@ require_once "templates/header.php";
 ?>
 
     <?php
+
+    $registered = FALSE;
+
     if (isset($_POST["submitButton"])) {
 
         $user = new UserController();
 
         // Language titles
         $user->TITLES = $VALIDATION;
+        $user->REGISTRATION_TITLES = $REGISTRATION;
 
         $user->email = $_POST["inputEmail"];
 
@@ -33,7 +37,11 @@ require_once "templates/header.php";
         // TRUE - Registration, FALSE - Authorization
         $user->isRegistering = TRUE;
 
-        $user->validate_fields();
+        $register = $user->register();
+
+        if ($register) {
+            $registered = TRUE;
+        }
     }
 
     ?>
@@ -47,7 +55,7 @@ require_once "templates/header.php";
             <div class="form-group">
                 <label for="inputEmail" class="col-lg-4 control-label"><?= $TITLES["email"] ?></label>
                 <div class="col-lg-8">
-                    <input type="text" name="inputEmail" class="form-control" id="inputEmail" placeholder="<?= $TITLES["email"] ?>" value="<?php render_input_value("inputEmail"); ?>" required>
+                    <input type="text" name="inputEmail" class="form-control" id="inputEmail" placeholder="<?= $TITLES["email"] ?>" value="<?php render_input_value("inputEmail", $registered); ?>" required>
                 </div>
             </div>
 
@@ -55,7 +63,7 @@ require_once "templates/header.php";
             <div class="form-group">
                 <label for="inputPassword" class="col-lg-4 control-label"><?= $TITLES["password"] ?></label>
                 <div class="col-lg-8">
-                    <input type="password" name="inputPassword" class="form-control" id="inputPassword" placeholder="<?= $TITLES["password"] ?>" value="<?php render_input_value("inputPassword"); ?>" required>
+                    <input type="password" name="inputPassword" class="form-control" id="inputPassword" placeholder="<?= $TITLES["password"] ?>" value="<?php render_input_value("inputPassword", $registered); ?>" required>
                 </div>
             </div>
 
@@ -63,7 +71,7 @@ require_once "templates/header.php";
             <div class="form-group">
                 <label for="inputPasswordRepeat" class="col-lg-4 control-label"><?= $TITLES["password_repeat"] ?></label>
                 <div class="col-lg-8">
-                    <input type="password" name="inputPasswordRepeat" class="form-control" id="inputPasswordRepeat" placeholder="<?= $TITLES["password_repeat"] ?>" value="<?php render_input_value("inputPasswordRepeat"); ?>" required>
+                    <input type="password" name="inputPasswordRepeat" class="form-control" id="inputPasswordRepeat" placeholder="<?= $TITLES["password_repeat"] ?>" value="<?php render_input_value("inputPasswordRepeat", $registered); ?>" required>
                 </div>
             </div>
 
@@ -71,7 +79,7 @@ require_once "templates/header.php";
             <div class="form-group">
                 <label for="inputFirstname" class="col-lg-4 control-label"><?= $TITLES["firstname"] ?></label>
                 <div class="col-lg-8">
-                    <input type="text" name="inputFirstname" class="form-control" id="inputFirstname" placeholder="<?= $TITLES["firstname"] ?>" value="<?php render_input_value("inputFirstname"); ?>" required>
+                    <input type="text" name="inputFirstname" class="form-control" id="inputFirstname" placeholder="<?= $TITLES["firstname"] ?>" value="<?php render_input_value("inputFirstname", $registered); ?>" required>
                 </div>
             </div>
 
@@ -79,7 +87,7 @@ require_once "templates/header.php";
             <div class="form-group">
                 <label for="inputLastname" class="col-lg-4 control-label"><?= $TITLES["lastname"] ?></label>
                 <div class="col-lg-8">
-                    <input type="text" name="inputLastname" class="form-control" id="inputLastname" placeholder="<?= $TITLES["lastname"] ?>" value="<?php render_input_value("inputLastname"); ?>" required>
+                    <input type="text" name="inputLastname" class="form-control" id="inputLastname" placeholder="<?= $TITLES["lastname"] ?>" value="<?php render_input_value("inputLastname", $registered); ?>" required>
                 </div>
             </div>
 
@@ -89,13 +97,13 @@ require_once "templates/header.php";
                 <div class="col-lg-8">
                     <div class="radio">
                         <label>
-                            <input type="radio" name="inputGender" id="inputGenderMale" value="male" <?php render_radio_checked("inputGender", "male"); ?> required>
+                            <input type="radio" name="inputGender" id="inputGenderMale" value="male" <?php render_radio_checked("inputGender", "male", $registered); ?> required>
                             <?= $TITLES["male"] ?>
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="inputGender" id="inputGenderFemale" value="female" <?php render_radio_checked("inputGender", "female"); ?> required>
+                            <input type="radio" name="inputGender" id="inputGenderFemale" value="female" <?php render_radio_checked("inputGender", "female", $registered); ?> required>
                             <?= $TITLES["female"] ?>
                         </label>
                     </div>
@@ -114,7 +122,7 @@ require_once "templates/header.php";
                             <select class="form-control select-dob" name="selectDay" id="selectDay" required>
                                 <?php
                                     $selected = get_input_value("selectDay");
-                                    render_days_of_month($selected);
+                                    render_days_of_month($selected, $registered);
                                 ?>
                             </select>
                         </div>
@@ -125,7 +133,7 @@ require_once "templates/header.php";
                             <select class="form-control select-dob" name="selectMonth" id="selectMonth" required>
                                 <?php
                                     $selected = get_input_value("selectMonth");
-                                    render_months($selected);
+                                    render_months($selected, $registered);
                                 ?>
                             </select>
                         </div>
@@ -136,7 +144,7 @@ require_once "templates/header.php";
                             <select class="form-control select-dob" name="selectYear" id="selectYear" required>
                                 <?php
                                     $selected = get_input_value("selectYear");
-                                    render_years($selected);
+                                    render_years($selected, $registered);
                                 ?>
                             </select>
                         </div>
