@@ -6,6 +6,11 @@
  * Time: 4:27 PM
  */
 ?>
-        </div>
+        </div> <!-- .container -->
+
+        <!-- Scripts -->
+        <script type="text/javascript" src="../assets/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+
     </body>
 </html>
