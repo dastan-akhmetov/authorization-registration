@@ -15,7 +15,7 @@ function create()
 {
 
     // instantiate an object
-    $db = new Database();
+    $db = new DatabaseModel();
 
     // cleanup
     $sql = "DROP TABLE IF EXISTS `user`";
@@ -30,8 +30,9 @@ function create()
       `lastname` VARCHAR (255) NOT NULL,
       `date_of_birth` DATE NOT NULL,
       `gender` VARCHAR (6) NOT NULL,
+      `photo_url` VARCHAR (500) NOT NULL,
       PRIMARY KEY (`id`),
-      INDEX `email` (`email` ASC)
+      UNIQUE INDEX `email_UNIQUE` (`email` ASC)
     )";
     $db->queryNoParams($sql);
 
