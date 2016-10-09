@@ -12,6 +12,7 @@ class UserModel extends DatabaseModel
     private $password;
     private $firstname;
     private $lastname;
+    private $photo_url;
     private $gender;
     private $date_of_birth;
 
@@ -44,23 +45,54 @@ class UserModel extends DatabaseModel
 
     public function register()
     {
+        try {
 
-        $this->sql = "INSERT INTO user (`email`,`password`, `firstname`, `lastname`, `gender`, `date_of_birth`) VALUES (:email, :password, :firstname, :lastname, :gender, :date_of_birth)";
+            $this->sql = "INSERT INTO user (`email`,`password`, `firstname`, `lastname`, `gender`, `date_of_birth`, `photo_url`) VALUES (:email, :password, :firstname, :lastname, :gender, :date_of_birth, :photo_url)";
 
-        $this->params = array(
-            ':email' => $this->email,
-            ':password' => $this->password,
-            ':firstname' => $this->firstname,
-            ':lastname' => $this->lastname,
-            ':gender' => $this->gender,
-            ':date_of_birth' => $this->date_of_birth
-        );
+            $this->params = array(
+                ':email' => $this->email,
+                ':password' => $this->password,
+                ':firstname' => $this->firstname,
+                ':lastname' => $this->lastname,
+                ':gender' => $this->gender,
+                ':date_of_birth' => $this->date_of_birth,
+                ':photo_url' => $this->photo_url
+            );
 
-        $register = $this->insert();
+            $register = $this->insert();
+
+        } catch (Throwable $t) {
+
+            $register = "Bad register.";
+
+        }
+
 
         return $register;
 
     }
+
+    public function authorize()
+    {
+
+        try {
+
+            $this->sql = "SELECT * FROM user WHERE email = :email AND password = :password";
+            $this->params = array(
+                ':email' => $this->email,
+                ':password' => $this->password
+            );
+
+        } catch (Throwable $t) {
+
+            return "Bad authorize.";
+
+        }
+
+
+        return $this->select();
+    }
+
 
 
 }
