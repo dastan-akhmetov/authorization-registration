@@ -5,15 +5,7 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-
-
-
-# Rewrite for human-friendly URLs
-#RewriteRule ^home/?$ index.php
-#RewriteRule ^authorization/?$ authorization.php
-#RewriteRule ^registration/?$ registration.php
-#RewriteRule ^logout/?$ logout.php
-
+# Rewrite pages without extensions
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
 # Rewrite for language settings
