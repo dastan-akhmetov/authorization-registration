@@ -9,7 +9,7 @@
         </div> <!-- .container -->
 
         <!-- Scripts -->
-        <script type="text/javascript" src="../assets/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../assets/js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
 
     </body>
