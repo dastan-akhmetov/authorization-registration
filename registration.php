@@ -27,6 +27,7 @@ require_once "templates/header.php";
 
         $user->firstname = $_POST["inputFirstname"];
         $user->lastname = $_POST["inputLastname"];
+        $user->photo = $_FILES["inputPhoto"];
 
         $user->day_of_birth = $_POST["selectDay"];
         $user->month_of_birth = $_POST["selectMonth"];
@@ -45,7 +46,7 @@ require_once "templates/header.php";
     }
 
     ?>
-    <form class="form-horizontal form-registration" method="post" action="registration">
+    <form class="form-horizontal form-registration" method="post" action="registration" enctype="multipart/form-data">
         <fieldset>
 
             <!-- Legend -->
@@ -55,7 +56,7 @@ require_once "templates/header.php";
             <div class="form-group">
                 <label for="inputEmail" class="col-lg-4 control-label"><?= $TITLES["email"] ?></label>
                 <div class="col-lg-8">
-                    <input type="text" name="inputEmail" class="form-control" id="inputEmail" placeholder="<?= $TITLES["email"] ?>" value="<?php render_input_value("inputEmail", $registered); ?>" required>
+                    <input type="text" name="inputEmail" class="form-control" id="inputEmail" placeholder="<?= $TITLES["email"] ?>" value="<?php render_input_value("inputEmail", $registered); ?>" required autofocus>
                 </div>
             </div>
 
@@ -88,6 +89,15 @@ require_once "templates/header.php";
                 <label for="inputLastname" class="col-lg-4 control-label"><?= $TITLES["lastname"] ?></label>
                 <div class="col-lg-8">
                     <input type="text" name="inputLastname" class="form-control" id="inputLastname" placeholder="<?= $TITLES["lastname"] ?>" value="<?php render_input_value("inputLastname", $registered); ?>" required>
+                </div>
+            </div>
+
+            <!-- Photo -->
+            <div class="form-group">
+                <label for="inputPhoto" class="col-lg-4 control-label"><?= $TITLES["photo"] ?></label>
+                <div class="col-lg-8">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+                    <input type="file" name="inputPhoto" class="form-control" id="inputPhoto" />
                 </div>
             </div>
 
