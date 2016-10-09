@@ -33,11 +33,13 @@ class DatabaseModel
 
     public function __get($property)
     {
+        $return = NULL;
 
         if (property_exists($this, $property))
 
-            return $this->$property;
+            $return = $this->$property;
 
+        return $return;
     }
 
     public function __set($property, $value)
@@ -81,15 +83,14 @@ class DatabaseModel
             $query = $this->handler->prepare($this->sql);
             $query->execute($this->params);
 
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $query->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (Throwable $t) {
 
-            echo "Bad select.";
+            return "Bad select.";
 
         }
 
-        return $result;
     }
 
     public function insert()
@@ -99,13 +100,32 @@ class DatabaseModel
             $query = $this->handler->prepare($this->sql);
             $query->execute($this->params);
 
-        } catch (Throwable $t) {
+            $error = $query->errorInfo();
 
-            echo "Bad insert.";
+            if ($error[2] === NULL)
+
+                $return = TRUE;
+
+            else {
+
+                if ($error[1] === 1062)
+
+                    $return = "Duplicate";
+
+                else
+
+                    $return = $error;
+
+            }
+
+
+        } catch (PDOException $e) {
+
+            $return =  "Bad insert.";
 
         }
 
-        return TRUE;
+        return $return;
     }
 
 
