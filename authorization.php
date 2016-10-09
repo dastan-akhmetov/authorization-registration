@@ -8,15 +8,28 @@
 include_once "templates/header.php";
 ?>
     <?php
+        if (isset($_SESSION["logged_in"])) {
+            header("Location: index");
+        }
+
+        $authorized = FALSE;
+
         if (isset($_POST["submitButton"])) {
 
             $user = new UserController();
             $user->TITLES = $VALIDATION;
+            $user->AUTHORIZATION_TITLES = $AUTHORIZATION;
 
             $user->email = $_POST["inputEmail"];
             $user->password = $_POST["inputPassword"];
 
-            $user->validate_fields();
+            $authorize = $user->authorize();
+
+            if ($authorize) {
+
+                $authorized = TRUE;
+                header("Location: index");
+            }
         }
 
     ?>
@@ -28,21 +41,16 @@ include_once "templates/header.php";
 
         <!-- Email -->
         <label for="inputEmail" class="sr-only"><?= $TITLES["email"] ?></label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="<?= $TITLES["email"] ?>" value="<?php render_input_value("inputEmail"); ?>" required autofocus>
+        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="<?= $TITLES["email"] ?>" value="<?php render_input_value("inputEmail", $authorized); ?>" required autofocus>
 
         <!-- Password -->
         <label for="inputPassword" class="sr-only"><?= $TITLES["password"] ?></label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="<?= $TITLES["password"] ?>" value="<?php render_input_value("inputPassword"); ?>" required>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="<?= $TITLES["password"] ?>" value="<?php render_input_value("inputPassword", $authorized); ?>" required>
 
-        <!-- Remember me -->
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> <?= $TITLES["remember_me"] ?>
-            </label>
-        </div>
+        <br/>
 
         <!-- Submit Button -->
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submitButton"><?= $TITLES["sign_in"] ?></button>
+        <button class="btn btn-primary btn-block" type="submit" name="submitButton"><?= $TITLES["sign_in"] ?></button>
 
     </form>
 
