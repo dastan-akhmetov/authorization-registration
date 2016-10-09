@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
     margin: 0;
@@ -13,24 +17,10 @@ body {
 
 .form-signin {
     max-width: 330px;
-    padding: 15px;
     margin: 0 auto;
-}
-.form-signin,
-.form-signin-heading,
-.form-signin .checkbox {
-    margin-bottom: 10px;
-}
-.form-signin .checkbox {
-    font-weight: normal;
 }
 .form-signin .form-control {
     position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px;
 }
 .form-signin .form-control:focus {
     z-index: 2;
@@ -41,7 +31,6 @@ body {
     border-bottom-left-radius: 0;
 }
 .form-signin input[type="password"] {
-    margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
@@ -55,10 +44,57 @@ body {
     max-width: 550px;
     margin: 0 auto;
 }
-
-.form-dob {
-
-}
 .select-dob {
     max-width: 120px;
+}
+
+/**
+ * Reusable
+ *
+ */
+
+.centered-text {
+    text-align: center;
+}
+
+.left-text {
+    text-align: left;
+}
+
+.flag {
+    display: inline-block;
+    width: 16px;
+    height: 11px;
+    background: url('../images/flags.png') no-repeat;
+}
+
+
+.flag.flag-ru {
+    background-position: 0 0;
+}
+
+.flag.flag-en {
+    background-position: -16px 0;
+}
+
+.photo {
+    margin-left: 15px;
+    width: 220px;
+    height: auto;
+    border: 2px solid #011d37;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.photo img {
+    width: 100%;
+    height: auto;
+}
+
+.details-list {
+    list-style: none;
+}
+
+.details-list li {
+    margin-bottom: 15px;
 }
