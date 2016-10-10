@@ -34,23 +34,36 @@ include_once "templates/header.php";
 
     ?>
 
-    <form class="form-signin" method="POST" action="<?= $CURRENT_PAGE ?>">
+    <form class="form-horizontal form-signin" method="POST" action="<?= $CURRENT_PAGE ?>">
 
         <!-- Legend -->
         <legend><?php render_title(); ?></legend>
 
         <!-- Email -->
-        <label for="inputEmail" class="sr-only"><?= $TITLES["email"] ?></label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="<?= $TITLES["email"] ?>" value="<?php render_input_value("inputEmail", $authorized); ?>" required autofocus>
+        <div class="form-group">
+            <label for="inputEmail" class="control-label col-lg-2"><?= $TITLES["email"] ?></label>
+            <div class="col-lg-6">
+                <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="<?= $TITLES["email"] ?>" value="<?php render_input_value("inputEmail", $authorized); ?>" required autofocus>
+            </div>
+            <span id="inputEmailHint" class="hints control-label col-lg-4"></span>
+        </div>
 
         <!-- Password -->
-        <label for="inputPassword" class="sr-only"><?= $TITLES["password"] ?></label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="<?= $TITLES["password"] ?>" value="<?php render_input_value("inputPassword", $authorized); ?>" required>
 
-        <br/>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-lg-2"><?= $TITLES["password"] ?></label>
+            <div class="col-lg-6">
+                <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="<?= $TITLES["password"] ?>" value="<?php render_input_value("inputPassword", $authorized); ?>" required>
+            </div>
+            <span id="inputPasswordHint" class="hints control-label col-lg-4"></span>
+        </div>
 
         <!-- Submit Button -->
-        <button class="btn btn-primary btn-block" type="submit" name="submitButton"><?= $TITLES["sign_in"] ?></button>
+        <div class="form-group">
+            <div class="col-lg-6 col-lg-offset-2">
+                <button class="btn btn-primary btn-block" type="submit" name="submitButton" id="submitButton"><?= $TITLES["sign_in"] ?></button>
+            </div>
+        </div>
 
     </form>
 
