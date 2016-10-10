@@ -229,6 +229,38 @@ class UserController
 
     }
 
+    public function check_email_duplicate()
+    {
+
+        $this->model->email = $this->email;
+        $result = $this->model->check_email_duplicate();
+
+        if (count($result) > 0) {
+
+            return TRUE;
+
+        }
+        else {
+
+            return FALSE;
+
+        }
+
+    }
+
+    public function change_password()
+    {
+        $hash_password = sha1($this->password);
+
+        $this->model->email = $this->email;
+        $this->model->password = $hash_password;
+
+        $result = $this->model->change_password();
+
+        return $result;
+
+    }
+
 
     /*
      * * * * * * * * * * * *   VALIDATIONS BEGIN  * * * * * * * * * * * *
