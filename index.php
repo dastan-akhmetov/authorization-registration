@@ -4,6 +4,7 @@ require_once "templates/header.php";
 
 <?php
     if (isset($_SESSION["logged_in"])) {
+    
         $registered = FALSE;
 ?>
         <div class="modal">
@@ -82,19 +83,7 @@ require_once "templates/header.php";
                     </div>
                 </div>
             </div>
-
-            <!-- Firstname -->
-
-            <!-- Lastname -->
-
-            <!-- Email -->
-
-            <!-- Change password -->
         </div>
-
-
-
-
 <?php
     }
     else
@@ -103,10 +92,6 @@ require_once "templates/header.php";
     }
 
 ?>
-
-
-
-
 
 <?php
 require_once "templates/footer.php";
