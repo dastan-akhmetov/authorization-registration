@@ -218,7 +218,7 @@ $(document).ready(function(){
     passwordTag.change(function () {
 
         validate_text_field('password');
-        
+
         if (current_page == 'index' || current_page == 'registration')
             validate_password_repeat();
 
