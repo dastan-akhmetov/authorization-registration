@@ -91,6 +91,48 @@ class UserModel extends DatabaseModel
 
 
         return $this->select();
+
+    }
+
+    public function check_email_duplicate()
+    {
+
+        try {
+
+            $this->sql = "SELECT * FROM user WHERE email = :email";
+            $this->params = array(
+                ':email' => $this->email
+            );
+
+        } catch (Throwable $t) {
+
+            return "Bad email check.";
+
+        }
+
+        return $this->select();
+
+    }
+
+    public function change_password()
+    {
+
+        try {
+
+            $this->sql = "UPDATE user SET password = :password WHERE email = :email";
+            $this->params = array(
+                ':password' => $this->password,
+                ':email' => $this->email
+            );
+
+        } catch (Throwable $t) {
+
+            return "Bad password change.";
+
+        }
+
+        return $this->update();
+
     }
 
 
