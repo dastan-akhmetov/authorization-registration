@@ -128,5 +128,36 @@ class DatabaseModel
         return $return;
     }
 
+    public function update()
+    {
+
+        try {
+
+            $query = $this->handler->prepare($this->sql);
+            $query->execute($this->params);
+
+            $error = $query->errorInfo();
+
+            if ($error[2] === NULL) {
+
+                $return = TRUE;
+
+            }
+            else {
+
+                $return = FALSE;
+
+            }
+
+        } catch (Throwable $t) {
+
+            $return = "Bad update.";
+
+        }
+
+        return $return;
+
+    }
+
 
 }
