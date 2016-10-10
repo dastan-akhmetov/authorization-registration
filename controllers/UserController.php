@@ -213,6 +213,9 @@ class UserController
         $photo_url = $this->ABS_UPLOAD_DIR . $upload_filename . "." . $this->photo_type;
         $this->photo_url = $this->SHORT_UPLOAD_DIR . $upload_filename . "." . $this->photo_type;
 
+        if (!is_dir($this->ABS_UPLOAD_DIR))
+            mkdir($this->ABS_UPLOAD_DIR, 0777);
+
         if (move_uploaded_file($this->photo["tmp_name"], $photo_url)) {
 
             return TRUE;
