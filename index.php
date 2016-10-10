@@ -32,7 +32,7 @@ require_once "templates/header.php";
                                     <strong><?= $TITLES["email"] ?>:</strong> <?= $_SESSION["email"] ?>
                                 </li>
                                 <li>
-                                    <a href="#" class="btn btn-primary"><?= $TITLES["change_password"] ?></a>
+                                    <a href="#" id="changePassword" class="btn btn-primary"><?= $TITLES["change_password"] ?></a>
                                 </li>
                             </ul>
                         </div>
