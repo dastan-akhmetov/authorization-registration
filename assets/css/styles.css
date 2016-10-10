@@ -7,6 +7,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #eee;
+    font-size: 14px;
 }
 
 
@@ -16,24 +17,22 @@ body {
  */
 
 .form-signin {
-    max-width: 330px;
+    max-width: 530px;
     margin: 0 auto;
 }
-.form-signin .form-control {
-    position: relative;
-}
-.form-signin .form-control:focus {
-    z-index: 2;
-}
-.form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
+/*.form-signin .form-control {*/
+    /*position: relative;*/
+/*}*/
+/*.form-signin .form-control:focus {*/
+    /*z-index: 2;*/
+/*}*/
+/*.form-signin input[type="email"] {*/
+    /*margin-bottom: 10px;*/
+/*}*/
+/*.form-signin input[type="password"] {*/
+    /*border-top-left-radius: 0;*/
+    /*border-top-right-radius: 0;*/
+/*}*/
 
 /**
  * Form Registration
@@ -41,7 +40,7 @@ body {
  */
 
 .form-registration {
-    max-width: 550px;
+    max-width: 900px;
     margin: 0 auto;
 }
 .select-dob {
@@ -97,4 +96,40 @@ body {
 
 .details-list li {
     margin-bottom: 15px;
+}
+
+.hints {
+    padding: 0;
+    text-align: left !important;
+    font-size: 0.8rem;
+}
+
+.danger {
+    border: 2px solid #b94a48;
+}
+
+.danger-text {
+    color: #b94a48;
+}
+
+.success {
+    border: 2px solid #468847;
+}
+
+.success-text {
+    color: #468847;
+}
+
+.hint-success {
+    color: green;
+    font-size: 1.5rem;
+    margin-top: -7px !important;
+}
+
+#inputGenderHint {
+    margin-top: 13px !important;
+}
+
+#selectHint {
+    margin-top: 16px !important;
 }
