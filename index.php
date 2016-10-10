@@ -4,7 +4,7 @@ require_once "templates/header.php";
 
 <?php
     if (isset($_SESSION["logged_in"])) {
-    
+
         $registered = FALSE;
 ?>
         <div class="modal">
