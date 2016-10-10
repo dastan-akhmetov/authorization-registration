@@ -11,7 +11,8 @@ require_once "bootstrap.php";
 <!doctype html>
 <html>
     <head>
-        <title></title>
+        <title><?= $SITE_TITLE ?></title>
+        <link rel="shortcut icon" href="<?= $BASE_URL ?>fav.ico" type="image/x-icon">
         <link type="text/css" rel="stylesheet" href="<?php echo $BASE_URL; ?>assets/css/bootstrap3.min.css">
         <link type="text/css" rel="stylesheet" href="<?php echo $BASE_URL; ?>assets/css/styles.css">
     </head>
