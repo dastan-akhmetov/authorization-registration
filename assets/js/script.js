@@ -25,7 +25,7 @@ $(document).ready(function(){
 
     LANGUAGE_SET['en']['validation']['valid']                       = '&#10004;';
     LANGUAGE_SET['en']['validation']['invalid_email']               = 'Please, enter a valid email address';
-    LANGUAGE_SET['en']['validation']['invalid_password']            = 'Password must containe at least 6 characters';
+    LANGUAGE_SET['en']['validation']['invalid_password']            = 'Password must contain at least 6 characters';
     LANGUAGE_SET['en']['validation']['invalid_password_repeat']     = 'Passwords do not match';
     LANGUAGE_SET['en']['validation']['password_repeat_null']        = 'Repeat password is empty';
     LANGUAGE_SET['en']['validation']['invalid_firstname']           = 'Firstname must contain only alphabetic letters';
@@ -35,10 +35,14 @@ $(document).ready(function(){
     LANGUAGE_SET['en']['validation']['invalid_day']                 = 'Please, indicate your day of birth';
     LANGUAGE_SET['en']['validation']['invalid_month']               = 'Please, indicate your month of birth';
     LANGUAGE_SET['en']['validation']['invalid_year']                = 'Please, indicate your year of birth';
+    LANGUAGE_SET['en']['validation']['duplicate_email']             = 'Email is already in use. Please, provide another one';
+    LANGUAGE_SET['en']['validation']['password_changed']            = 'Password successfully changed';
+    LANGUAGE_SET['en']['validation']['password_not_changed']        = 'Password was not changed. Try again';
+    LANGUAGE_SET['en']['validation']['passwords_do_not_match']      = 'Passwords do not match. Try again';
 
     LANGUAGE_SET['ru']['validation']['valid']                       = '&#10004;';
     LANGUAGE_SET['ru']['validation']['invalid_email']               = 'Пожалуйста, введите валидный адрес email';
-    LANGUAGE_SET['ru']['validation']['invalid_password']            = 'Минимальная длина пароля должна состовлять 6 знаков';
+    LANGUAGE_SET['ru']['validation']['invalid_password']            = 'Минимальная длина пароля должна составлять 6 знаков';
     LANGUAGE_SET['ru']['validation']['invalid_password_repeat']     = 'Пароли не совпадают';
     LANGUAGE_SET['ru']['validation']['password_repeat_null']        = 'Повторный пароль пустой';
     LANGUAGE_SET['ru']['validation']['invalid_firstname']           = 'Имя должно содержать только буквы';
@@ -48,6 +52,10 @@ $(document).ready(function(){
     LANGUAGE_SET['ru']['validation']['invalid_day']                 = 'Пожалуйста, укажите день рождения';
     LANGUAGE_SET['ru']['validation']['invalid_month']               = 'Пожалуйста, укажите месяц рождения';
     LANGUAGE_SET['ru']['validation']['invalid_year']                = 'Пожалуйста, укажите год рождения';
+    LANGUAGE_SET['ru']['validation']['duplicate_email']             = 'Email уже занят. Пожалуйста, используйте другой адрес';
+    LANGUAGE_SET['ru']['validation']['password_changed']            = 'Пароль успешно изменен';
+    LANGUAGE_SET['ru']['validation']['password_not_changed']        = 'Пароль не изменен. Попробуйте заново';
+    LANGUAGE_SET['ru']['validation']['passwords_do_not_match']      = 'Пароли не совпадают. Попробуйте заново';
 
     LANGUAGE = LANGUAGE_SET[current_language];
     VALIDATION = LANGUAGE['validation'];
@@ -200,6 +208,7 @@ $(document).ready(function(){
     emailTag.blur(function () {
 
         validate_text_field('email');
+        check_email_duplication();
 
     })
 
@@ -209,6 +218,9 @@ $(document).ready(function(){
     passwordTag.change(function () {
 
         validate_text_field('password');
+        
+        if (current_page == 'index' || current_page == 'registration')
+            validate_password_repeat();
 
     })
 
@@ -473,9 +485,125 @@ $(document).ready(function(){
 
     function check_email_duplication() {
 
-        $.ajax
+        var correct_email = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+
+        if (correct_email.test(emailTag.val()) && current_page == 'registration') {
+
+            var urlString = protocol + current_domain + '/' + current_language + '/' + 'ajax';
+
+            var request = $.ajax({
+                method: "POST",
+                url: urlString,
+                data: { action: 'check_email', email: emailTag.val() }
+            });
+
+            request.done(function(data){
+
+                var response = $.parseJSON(data);
+                var isDuplicate = response.isDuplicate;
+
+                if (isDuplicate === true) {
+
+                    emailTag.removeClass('success');
+                    emailTag.addClass('danger');
+                    emailHint.removeClass('hint-success');
+                    emailHint.html(VALIDATION['duplicate_email']);
+                    validation.email = false;
+
+                }
+                else {
+
+                    emailTag.removeClass('danger');
+                    emailTag.addClass('success');
+                    emailHint.addClass('hint-success');
+                    emailHint.html(VALIDATION['valid']);
+                    validation.email = true;
+
+                }
+
+            });
+
+            request.fail(function (data) {
+
+                console.log(data);
+
+            })
+
+        }
 
     }
 
+    $("#changePassword").click(function () {
+
+        $(".modal").css('display', 'block');
+
+    })
+
+    $("button.close").click(function () {
+
+        $(".modal").css('display', 'none');
+
+    })
+
+    $("button[data-dismiss=modal]").click(function () {
+
+        $(".modal").css('display', 'none');
+
+    })
+
+    $("#saveChangePassword").click(function () {
+
+        var correct_password = /^(\S){6,}$/igm;
+
+        if (passwordTag.val() === passwordRepeatTag.val() && correct_password.test(passwordTag.val())) {
+
+            var urlString = protocol + current_domain + '/' + current_language + '/' + 'ajax';
+
+            var emailValue = $("#hiddenEmail").val();
+
+            var request = $.ajax({
+                method: "POST",
+                url: urlString,
+                data: { action: 'change_password', email: emailValue, password: passwordTag.val(), password_repeat: passwordRepeatTag.val() }
+            });
+
+            request.done(function(data){
+
+                var response = $.parseJSON(data);
+                var passwordChanged = response.passwordChanged;
+
+                if (passwordChanged === true) {
+
+                    $("#resultPasswordChange").removeClass('danger-text');
+                    $("#resultPasswordChange").addClass('success-text');
+                    $("#resultPasswordChange").html(VALIDATION['password_changed']);
+
+                }
+                else {
+
+                    $("#resultPasswordChange").removeClass('success-text');
+                    $("#resultPasswordChange").addClass('danger-text');
+
+                    if (response.reason == 'passwords_do_not_match')
+
+                        $("#resultPasswordChange").html(VALIDATION['passwords_do_not_match']);
+
+                    else
+
+                        $("#resultPasswordChange").html(VALIDATION['password_not_changed']);
+
+                }
+
+            });
+
+            request.fail(function (data) {
+
+                console.log(data);
+
+            })
+
+        }
+
+    })
 
 });
