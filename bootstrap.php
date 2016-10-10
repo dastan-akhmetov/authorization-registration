@@ -74,6 +74,8 @@ $LANGUAGE_SET["ru"]["titles"]["sign_in"]            = "Войти";
 $LANGUAGE_SET["ru"]["titles"]["welcome"]            = "Добро пожаловать";
 $LANGUAGE_SET["ru"]["titles"]["welcome_to"]         = "Добро пожаловать в";
 $LANGUAGE_SET["ru"]["titles"]["change_password"]    = "Сменить пароль";
+$LANGUAGE_SET["ru"]["titles"]["save_changes"]       = "Сохранить изменения";
+$LANGUAGE_SET["ru"]["titles"]["close"]              = "Закрыть";
 
 // Validation titles
 $LANGUAGE_SET["ru"]["validation"]["invalid_email_format"]       = "Неверный формат Email";
@@ -149,6 +151,8 @@ $LANGUAGE_SET["en"]["titles"]["sign_in"]            = "Sign In";
 $LANGUAGE_SET["en"]["titles"]["welcome"]            = "Welcome";
 $LANGUAGE_SET["en"]["titles"]["welcome_to"]         = "Welcome to";
 $LANGUAGE_SET["en"]["titles"]["change_password"]    = "Change password";
+$LANGUAGE_SET["en"]["titles"]["save_changes"]       = "Save changes";
+$LANGUAGE_SET["en"]["titles"]["close"]              = "Close";
 
 // Validation titles
 $LANGUAGE_SET["en"]["validation"]["invalid_email_format"]       = "Invalid Email format";
