@@ -21,7 +21,7 @@ include_once "templates/header.php";
             $user->AUTHORIZATION_TITLES = $AUTHORIZATION;
 
             $user->email = $_POST["inputEmail"];
-            $user->password = $_POST["inputPassword"];
+            $user->password = filter_var($_POST["inputPassword"], FILTER_SANITIZE_STRING);
 
             $authorize = $user->authorize();
 
