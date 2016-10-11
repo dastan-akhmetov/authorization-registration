@@ -22,18 +22,18 @@ require_once "templates/header.php";
 
         $user->email = $_POST["inputEmail"];
 
-        $user->password = $_POST["inputPassword"];
-        $user->password_repeat = $_POST["inputPasswordRepeat"];
+        $user->password = filter_var($_POST["inputPassword"], FILTER_SANITIZE_STRING);
+        $user->password_repeat = filter_var($_POST["inputPasswordRepeat"], FILTER_SANITIZE_STRING);
 
-        $user->firstname = $_POST["inputFirstname"];
-        $user->lastname = $_POST["inputLastname"];
+        $user->firstname = filter_var($_POST["inputFirstname"], FILTER_SANITIZE_STRING);
+        $user->lastname = filter_var($_POST["inputLastname"], FILTER_SANITIZE_STRING);
         $user->photo = $_FILES["inputPhoto"];
 
-        $user->day_of_birth = $_POST["selectDay"];
-        $user->month_of_birth = $_POST["selectMonth"];
-        $user->year_of_birth = $_POST["selectYear"];
+        $user->day_of_birth = filter_var($_POST["selectDay"], FILTER_SANITIZE_NUMBER_INT);
+        $user->month_of_birth = filter_var($_POST["selectMonth"], FILTER_SANITIZE_STRING);
+        $user->year_of_birth = filter_var($_POST["selectYear"], FILTER_SANITIZE_NUMBER_INT);
 
-        $user->gender = $_POST["inputGender"];
+        $user->gender = filter_var($_POST["inputGender"], FILTER_SANITIZE_STRING);
 
         // TRUE - Registration, FALSE - Authorization
         $user->isRegistering = TRUE;
