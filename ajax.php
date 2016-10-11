@@ -30,7 +30,7 @@ if (isset($_POST["action"])) {
         if ($_POST["password"] == $_POST["password_repeat"]) {
 
             $user->email = $_POST["email"];
-            $user->password = $_POST["password"];
+            $user->password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
 
             $result = $user->change_password();
 
